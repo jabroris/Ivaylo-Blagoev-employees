@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Longest Working Pair</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h1>Longest Working Pair</h1>
+<label for="fileInput">Select File:</label>
+<input type="file" id="fileInput">
+<button onclick="getLongestWorkingPair()">Get Longest Working Pair</button>
+<div id="result"></div>
+
+<script>
+        function getLongestWorkingPair() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            if (file) {
+                const filePath = file.name;
+                $.ajax({
+                    url: "/longest-working-pair",
+                    data: { filePath: filePath },
+                    success: function(data) {
+                        $("#result").text(`Employee 1: ${data.empId1}, Employee 2: ${data.empId2}, Project ID: ${data.projectId}, Duration: ${data.maxPeriod} days`);
+                    },
+                    error: function() {
+                        $("#result").text("Error occurred while fetching data.");
+                    }
+                });
+            } else {
+                $("#result").text("Please select a file.");
+            }
+        }
+    </script>
+</body>
+</html>
